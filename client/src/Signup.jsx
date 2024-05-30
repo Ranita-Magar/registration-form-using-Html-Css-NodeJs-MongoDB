@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Signup() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("", { name, email, password })
-      .then((result) => console.log(result))
+      .post(
+        "http://localhost:3001/register",
+        { name, email, password }.then((result) => {
+          console.log(result);
+          navigate("/login");
+        })
+      )
+
       .catch((err) => console.log(err));
   };
 
@@ -65,7 +72,7 @@ export default function Signup() {
             />
           </div>
 
-          <button type="button" className="btn btn-success w-100 rounded-0">
+          <button type="submit" className="btn btn-success w-100 rounded-0">
             Register
           </button>
         </form>
